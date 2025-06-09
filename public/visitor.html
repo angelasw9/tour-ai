@@ -1,1 +1,17 @@
+<!DOCTYPE html>
+<html>
+<head><title>遊客端</title></head>
+<body>
+  <h2>收聽翻譯語音</h2>
+  <audio id="player" controls autoplay></audio>
+  <script src="/socket.io/socket.io.js"></script>
+  <script>
+    const socket = io();
+    const audio = document.getElementById("player");
 
+    socket.on("translation", (data) => {
+      audio.src = data.audioUrl;
+    });
+  </script>
+</body>
+</html>
