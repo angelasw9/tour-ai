@@ -1,1 +1,23 @@
+<!DOCTYPE html>
+<html>
+<head><title>導遊端</title></head>
+<body>
+  <h2>導遊語音上傳</h2>
+  <button id="start">開始講話</button>
+  <script src="/socket.io/socket.io.js"></script>
+  <script>
+    const socket = io();
+    let mediaRecorder;
 
+    document.getElementById("start").onclick = async () => {
+      const stream = await navigator.mediaDevices.getUserMedia({ audio: true });
+      mediaRecorder = new MediaRecorder(stream);
+      mediaRecorder.start(250); // 每 250ms 傳送一次片段
+
+      mediaRecorder.ondataavailable = e => {
+        socket.emit("audio", e.data);
+      };
+    };
+  </script>
+</body>
+</html>
