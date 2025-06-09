@@ -3,14 +3,31 @@
 <head><title>遊客端</title></head>
 <body>
   <h2>收聽翻譯語音</h2>
+  <label for="language">選擇語言：</label>
+  <select id="language">
+    <option value="en">英文</option>
+    <option value="ja">日文</option>
+    <option value="ko">韓文</option>
+    <option value="zh-Hant">中文（繁體）</option>
+    <option value="fr">法文</option>
+  </select>
   <audio id="player" controls autoplay></audio>
+
   <script src="/socket.io/socket.io.js"></script>
   <script>
     const socket = io();
     const audio = document.getElementById("player");
+    const languageSelect = document.getElementById("language");
+
+    let selectedLang = languageSelect.value;
+    languageSelect.onchange = () => {
+      selectedLang = languageSelect.value;
+    };
 
     socket.on("translation", (data) => {
-      audio.src = data.audioUrl;
+      if (data.lang === selectedLang) {
+        audio.src = data.audioUrl;
+      }
     });
   </script>
 </body>
