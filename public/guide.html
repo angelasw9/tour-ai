@@ -3,13 +3,31 @@
 <head><title>導遊端</title></head>
 <body>
   <h2>導遊語音上傳</h2>
+  <label for="inputLang">選擇講解語言（辨識語言）：</label>
+  <select id="inputLang">
+    <option value="en-US">英文</option>
+    <option value="ja-JP">日文</option>
+    <option value="zh-TW">中文（台灣）</option>
+    <option value="ko-KR">韓文</option>
+    <option value="fr-FR">法文</option>
+  </select>
+
+  <br><br>
   <button id="start">開始講話</button>
+
   <script src="/socket.io/socket.io.js"></script>
   <script>
     const socket = io();
     let mediaRecorder;
+    let selectedLang = document.getElementById("inputLang").value;
+
+    document.getElementById("inputLang").onchange = () => {
+      selectedLang = document.getElementById("inputLang").value;
+      socket.emit("language", selectedLang);
+    };
 
     document.getElementById("start").onclick = async () => {
+      socket.emit("language", selectedLang);
       const stream = await navigator.mediaDevices.getUserMedia({ audio: true });
       mediaRecorder = new MediaRecorder(stream);
       mediaRecorder.start(250); // 每 250ms 傳送一次片段
