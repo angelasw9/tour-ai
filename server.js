@@ -103,7 +103,3 @@ async function synthesizeSpeech(text, langCode) {
 server.listen(3000, () => {
   console.log("Server started on http://localhost:3000");
 });
-/*
-app.get('/', (req, res) => {
-  res.sendFile(__dirname + '/public/index.html');
-});
