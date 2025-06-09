@@ -1,1 +1,35 @@
+{
+  "name": "tour-ai-realtime-translation",
+  "version": "1.0.0",
+  "description": "B2B2C SaaS 即時語音翻譯導覽系統（WebRTC + Azure）",
+  "main": "server.js",
+  "scripts": {
+    "start": "node server.js"
+  },
+  "dependencies": {
+    "@azure/cognitiveservices-speech-sdk": "^1.31.0",
+    "axios": "^1.6.0",
+    "dotenv": "^16.0.0",
+    "express": "^4.18.2",
+    "socket.io": "^4.7.2"
+  },
+  "engines": {
+    "node": ">=18.0.0"
+  },
+  "keywords": [
+    "azure",
+    "speech",
+    "translator",
+    "websocket",
+    "webrtc",
+    "nodejs",
+    "tour",
+    "audio",
+    "real-time",
+    "TTS",
+    "STT"
+  ],
+  "author": "Yuwei",
+  "license": "None"
+}
 
