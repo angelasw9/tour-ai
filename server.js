@@ -33,6 +33,8 @@ io.on("connection", (socket) => {
   });
 
   const speechConfig = sdk.SpeechConfig.fromSubscription(process.env.AZURE_KEY, process.env.AZURE_REGION);
+  // Apply the input language selected by the client
+  speechConfig.speechRecognitionLanguage = inputLang;
   const audioConfig = sdk.AudioConfig.fromStreamInput(pushStream);
   const recognizer = new sdk.SpeechRecognizer(speechConfig, audioConfig);
 
@@ -91,10 +93,19 @@ async function synthesizeSpeech(text, langCode) {
   const audioConfig = sdk.AudioConfig.fromAudioFileOutput(`public/tts/${outputFile}`);
   const synthesizer = new sdk.SpeechSynthesizer(speechConfig, audioConfig);
 
-  return new Promise((resolve) => {
-    synthesizer.speakTextAsync(text, () => {
-      resolve(`/tts/${outputFile}`);
-    });
+  return new Promise((resolve, reject) => {
+    synthesizer.speakTextAsync(
+      text,
+      () => {
+        synthesizer.close();
+        resolve(`/tts/${outputFile}`);
+      },
+      (err) => {
+        console.error("Speech synthesis error", err);
+        synthesizer.close();
+        reject(err);
+      }
+    );
   });
 }
 
