@@ -1,5 +1,3 @@
-// server.js - 使用 WebRTC 實現語音即時串流 + 翻譯 + 播放
-
 const express = require("express");
 const http = require("http");
 const { Server } = require("socket.io");
